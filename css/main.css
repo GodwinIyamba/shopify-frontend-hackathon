@@ -81,6 +81,13 @@ a:visited {
   color: var(--state-focused);
 }
 
+hr {
+  height: 0.75px;
+  margin: 0px;
+  border: 0px;
+  background-color: #E1E1E1;
+}
+
 /* Font Import via Google Fonts */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
@@ -376,22 +383,26 @@ a:visited {
   align-items: center;
   justify-content: end;
   gap: 8px;
-  color: var(--font-light);
+  position: relative;
 }
 
 .notification-icon {
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 6px;
   border-radius: 8px;
   background-color: var(--bg);
 }
 
-.notification-icon svg {
+.notification-icon span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification-icon span svg {
   height: 20px;
   width: 20px;
+  color: var(--font-light);
   fill: currentColor;
 }
 
@@ -403,28 +414,30 @@ a:visited {
   background-color: var(--font-mid-light);
 }
 
-.notification-detail {
+.notification > .profile-detail {
+  padding: 2px;
   display: flex;
   align-items: center;
   gap: 8px;
-  cursor: pointer;
+  color: var(--font-light);
   background-color: var(--bg);
   border-radius: 8px;
+  position: relative;
 }
 
-.notification-detail:hover {
+.notification > .profile-detail:hover {
   background-color: var(--font-mid);
 }
 
-.notification-detail:active {
+.notification > .profile-detail:active {
   background-color: var(--font-mid-light);
 }
 
-.notification-detail span:nth-of-type(1) {
-  padding: 11.5px 3px 11.5px 8px;
+.notification > .profile-detail .profile-name {
+  padding: 8.5px 0px 8.5px 6px;
 }
 
-.notification-detail span:nth-of-type(2) {
+.notification > .profile-detail .profile-initials {
   display: inline-block;
   line-height: normal;
   text-align: center;
@@ -435,10 +448,149 @@ a:visited {
   color: var(--font-notification);
 }
 
+/* Hide dropdown */
+
+.hide-dropdown {
+  display: none;
+}
+
+/* Notification Dropdown Style */
+
+.notification-dropdown {
+  box-sizing: border-box;
+  width: 358px;
+  border: 1px solid #DBDBDB;
+  border-radius: 14px;
+  background-color: #FFFFFF;
+  padding: 16px;
+  position: absolute;
+  top: 100%;
+  right: 0px;
+  z-index: 10;
+}
+
+.notification-dropdown .notification-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.notification-dropdown .notification-header .notification-icons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--font-mid);
+}
+
+
+.notification-dropdown .notification-header .notification-icons span svg {
+  height: 20px;
+  width: 20px;
+  fill: currentColor;
+}
+
+.notification-body .notification-info {
+  padding: 16px;
+  background-color: var(--plain-background);
+  text-align: center;
+}
+
+/* Profile Dropdown Style */
+
+.profile-dropdown {
+  box-sizing: border-box;
+  width: 320px;
+  border: 1px solid #DBDBDB;
+  border-radius: 14px;
+  color: var(--bg);
+  background-color: #FFFFFF;
+  position: absolute;
+  top: calc(100% + 20px);
+  right: 0px;
+  z-index: 10;
+}
+
+.profile-dropdown > ul {
+  list-style: none;
+  margin: 0px;
+  margin-bottom: 4px;
+  padding: 6px;
+}
+
+.profile-dropdown > ul li:not(:last-child){
+  margin-bottom: 4px;
+}
+
+.profile-dropdown ul:not(:first-child) li {
+  cursor: default;
+  border-radius: 8px;
+  padding: 6px;
+}
+
+.profile-dropdown ul:not(:first-child) li:hover {
+  background-color: var(--plain-background);
+}
+
+.profile-dropdown ul:not(:first-child) li:active {
+  background-color: var(--state-pressed);
+}
+
+.profile-dropdown ul:not(:first-child) li.account-details:hover {
+  background-color: transparent;
+}
+
+.profile-dropdown ul:not(:first-child) li .list-header {
+  display: block;
+  color: #323232;
+}
+
+.profile-dropdown ul:not(:first-child) li .list-lead {
+  color: #5B595C;
+}
+
+.profile-dropdown .profile {
+  cursor: pointer;
+  padding: 4px 8px;
+  background-color: var(--plain-background);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profile-dropdown .profile .profile-detail {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile-dropdown .profile-detail .profile-initials {
+  display: inline-block;
+  line-height: normal;
+  text-align: center;
+  background-color: var(--user-initials-bg);
+  border-radius: 6px;
+  padding: 8px 6px;
+  margin: 2px 2px 2px 0;
+  color: var(--font-notification);
+}
+
+.profile-dropdown .profile .profile-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-dropdown .profile .profile-icon svg {
+  height: 30px;
+  width: 30px;
+}
+
 /*TO DO: Notification Focus State */
 
-/* Dropdown Style */
-.dropdown {
+/* Profile Style */
+.item {
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -447,19 +599,19 @@ a:visited {
   padding: 7px 6px;
 }
 
-.dropdown:hover {
+.item:hover {
   background-color: var(--plain-background);
 }
 
-.dropdown:active {
+.item:active {
   background-color: var(--state-pressed);
 }
 
-.dropdown-icon  {
+.item-icon  {
   margin-right: 8px;
 }
 
-.dropdown-icon svg {
+.item-icon svg {
   width: 25px;
   height: 25px;
   fill: currentColor;
@@ -633,7 +785,7 @@ a:visited {
 .accordion-details .check-container .check-header {
   cursor: pointer;
   margin: 0px;
-  color: #303030;
+  color: var(--bg);
 }
 
 .accordion-details .check-container .check:hover {
@@ -707,8 +859,6 @@ a:visited {
   overflow: hidden;
 }
 
-/*TO DO: Dropdown Focus State */
-
 /* 
 * Media Queries
 */
@@ -740,17 +890,23 @@ a:visited {
     display: block;
   }
 
-  .header-main .notification .notification-detail {
+  .header-main .notification .profile-detail {
     background-color: transparent;
     padding: 0;
   }
 
-  .header-main .notification .notification-detail span:nth-of-type(1) {
+  .header-main .notification .profile-detail .profile-name {
     display: none;
   }
 
   .notification-icon {
     background-color: transparent;
+  }
+
+  /* Profile Dropdown */
+
+  .profile-dropdown {
+    top: calc(100% + 24px);
   }
 
   /* Main Body Style */

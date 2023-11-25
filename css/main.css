@@ -388,7 +388,6 @@ hr {
 
 .notification-icon {
   cursor: pointer;
-  padding: 6px;
   border-radius: 8px;
   background-color: var(--bg);
 }
@@ -397,6 +396,7 @@ hr {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 8.5px;
 }
 
 .notification-icon span svg {
@@ -450,7 +450,7 @@ hr {
 
 /* Hide dropdown */
 
-.hidden-dropdown {
+.hide {
   display: none;
 }
 

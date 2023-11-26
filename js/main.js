@@ -62,35 +62,45 @@ document.addEventListener('click', (e) => {
 });
 
 //LISTENER FUNCTIONS
-function showNotificationDropdown(e) {
-    e.stopPropagation();
-
-    if(notificationDropdown.classList.contains('hide')) {    
-        notificationDropdown.classList.remove('hide');
+function showNotificationDropdown() {
+    if(notificationDropdown.classList.contains('show')) {    
+        notificationDropdown.classList.remove('show');
     } else {
-        notificationDropdown.classList.add('hide');
+        notificationDropdown.classList.add('show');
     }
 }
 
-function showProfileDropdown(e){
-    e.stopPropagation();
-
-    if(profileDropdown.classList.contains('hide')) {    
-        profileDropdown.classList.remove('hide');
+function showProfileDropdown(){
+    if(profileDropdown.classList.contains('show')) {    
+        profileDropdown.classList.remove('show');
     } else {
-        profileDropdown.classList.add('hide');
+        profileDropdown.classList.add('show');
     }  
 }
 
 function outsideNotificationDropdown(e) {
-    if(notificationDropdown.classList.contains('hide') === false && e.target !== notificationDropdown){
-        notificationDropdown.classList.add('hide');
+
+    let notificationSvg = document.querySelector('.bell');
+
+    if(e.target.parentElement === notificationBtn || e.target === notificationSvg || e.target === notificationBtn) {
+        return;
+    }
+   
+    if(notificationDropdown.classList.contains('show') && e.target !== notificationDropdown){
+        notificationDropdown.classList.remove('show');
     } 
 }
 
 function outsideProfileDropdown(e) {
-    if(profileDropdown.classList.contains('hide') === false && e.target !== profileDropdown){
-        profileDropdown.classList.add('hide');
+    let profileName = document.querySelector('.profile-name');
+    let profileInitials = document.querySelector('.profile-initials');
+
+    if(e.target.parentElement === profileBtn || e.target === profileName || e.target === profileInitials || e.target === profileBtn) {
+        return;
+    }
+
+    if(profileDropdown.classList.contains('show') && e.target !== profileDropdown){
+        profileDropdown.classList.remove('show');
     } 
 }
 
@@ -124,7 +134,6 @@ function closeAccordionContainer(e){
     }
 }
 
-
 function openAccordionContainer(e){
     e.stopPropagation();
 
@@ -148,9 +157,7 @@ function toggleAccordion(accordionHeader) {
         };
 
         accordionContainer.classList.remove('collapsed');
-    } else {
-        accordionContainer.classList.add('collapsed');
-    }
+    } 
 }
 
 function removeDashedBorder(checkBorderFull) {
@@ -178,9 +185,8 @@ function showCheckRotateTick(checkBorderFull) {
     let section = 100 / checkTicks.length;
     let progressBarWidth = section;
     let activeAccordionCount = 1;
-    
 
-    for(checkTick of checkTicks) {
+    for(let checkTick of checkTicks) {
         if(checkTick.classList.contains('check-tick-active')){
             progressBarWidth += section;
             activeAccordionCount++
@@ -204,7 +210,7 @@ function removeCheckTick(checkTick) {
     let section = 100 / checkTicks.length;
     let activeAccordionCount = 0;
     
-    for(checkTick of checkTicks) {
+    for(let checkTick of checkTicks) {
         if(checkTick.classList.contains('check-tick-active')){
             activeAccordionCount++;
         }

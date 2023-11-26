@@ -192,8 +192,27 @@ hr {
 /* Main Body Styles */
 
 .invisible {
-  display: none !important;
+  height: 0px !important;
+  visibility: hidden;
+  animation: scale-out-center 0.3s ease-in-out;
 }
+
+@keyframes scale-out-center {
+  0% {
+      transform: scale(1);
+      opacity: 1;
+  }
+  80% {
+        transform: scale(0.85);
+        opacity: 0.5;
+  }
+  100% {
+    display: none;
+    transform: scale(0);
+    opacity: 0;
+}
+}
+
 
 .main-body {
   display: flex;
@@ -216,7 +235,7 @@ hr {
   transition: opacity 0.1s ease-in-out, visibility 0.1s ease-in-out;
 }
 
-/*Button Styles */
+/* Button Styles */
 .button-one {
   cursor: pointer;
   border-width: 1.5px;
@@ -269,6 +288,7 @@ hr {
 
 .button-two {
   cursor: pointer;
+  display: inline-block;
   border-width: 1.5px;
   border-bottom-width: 0px;
   border-style: solid;
@@ -454,11 +474,26 @@ hr {
   color: var(--font-notification);
 }
 
-/* Hide dropdown */
+/* Show/Hide dropdown */
+
+.show {
+  display: block !important;
+  animation: fade-in 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
 
 .hide {
   display: none !important;
 }
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 
 /* Notification Dropdown Style */
 
@@ -474,6 +509,7 @@ hr {
   top: calc(100% + 20px);
   right: 0px;
   z-index: 10;
+  display: none;
 }
 
 .notification-dropdown .notification-header {
@@ -518,6 +554,7 @@ hr {
   top: calc(100% + 20px);
   right: 0px;
   z-index: 10;
+  display: none;
 }
 
 .profile-dropdown > ul {
@@ -525,6 +562,11 @@ hr {
   margin: 0px;
   margin-bottom: 4px;
   padding: 6px;
+}
+
+.profile-dropdown > ul a {
+  text-decoration: none;
+  color: currentColor;
 }
 
 .profile-dropdown > ul li:not(:last-child){
@@ -561,6 +603,7 @@ hr {
 .profile-dropdown .profile {
   cursor: pointer;
   padding: 4px 8px;
+  margin-bottom: 4px;
   background-color: var(--plain-background);
   border-radius: 8px;
   display: flex;
@@ -627,6 +670,7 @@ hr {
 
 /* Alert Style */
 .alert {
+  height: auto;
   padding: 19px 16px;
   border-radius: 8px;
   background-color: var(--alert-bg);
@@ -669,8 +713,14 @@ hr {
   align-items: center;
 }
 
-.alert-close button {
+.alert-close a {
   margin-right: 8px;
+  text-decoration: none;
+  color: var(--button-label-dark);
+}
+
+.alert-close a:visited {
+  color: var(--button-label-dark);;
 }
 
 /* Toggle Style */

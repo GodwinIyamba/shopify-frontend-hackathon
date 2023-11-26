@@ -191,6 +191,10 @@ hr {
 
 /* Main Body Styles */
 
+.invisible {
+  display: none !important;
+}
+
 .main-body {
   display: flex;
   flex-direction: column;
@@ -200,6 +204,7 @@ hr {
 
 .main-body .container {
   width: 800px;
+  margin-top: 16px;
   background-color: var(--plain-white);
   box-sizing: border-box;
 }
@@ -207,8 +212,8 @@ hr {
 .main-body .alert{
   width: 800px;
   margin-top: 32px;
-  margin-bottom: 16px;
   box-sizing: border-box;
+  transition: opacity 0.1s ease-in-out, visibility 0.1s ease-in-out;
 }
 
 /*Button Styles */
@@ -392,14 +397,14 @@ hr {
   background-color: var(--bg);
 }
 
-.notification-icon span {
+.notification-icon > span {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 8.5px;
 }
 
-.notification-icon span svg {
+.notification-icon > span svg {
   height: 20px;
   width: 20px;
   color: var(--font-light);
@@ -415,6 +420,7 @@ hr {
 }
 
 .notification > .profile-detail {
+  cursor: pointer;
   padding: 2px;
   display: flex;
   align-items: center;
@@ -451,12 +457,13 @@ hr {
 /* Hide dropdown */
 
 .hide {
-  display: none;
+  display: none !important;
 }
 
 /* Notification Dropdown Style */
 
 .notification-dropdown {
+  cursor: default;
   box-sizing: border-box;
   width: 358px;
   border: 1px solid #DBDBDB;
@@ -464,7 +471,7 @@ hr {
   background-color: #FFFFFF;
   padding: 16px;
   position: absolute;
-  top: 100%;
+  top: calc(100% + 20px);
   right: 0px;
   z-index: 10;
 }
@@ -493,12 +500,14 @@ hr {
 .notification-body .notification-info {
   padding: 16px;
   background-color: var(--plain-background);
+  color: #616161;
   text-align: center;
 }
 
 /* Profile Dropdown Style */
 
 .profile-dropdown {
+  cursor: default;
   box-sizing: border-box;
   width: 320px;
   border: 1px solid #DBDBDB;
@@ -591,7 +600,6 @@ hr {
 
 /* Profile Style */
 .item {
-  cursor: pointer;
   display: flex;
   align-items: center;
   color: var(--bg);
@@ -738,9 +746,10 @@ hr {
 } 
 
 .header-details .progress .progress-bar {
-  width: 40%;
+  width: 0%;
   height:4px;
   background-color: #1A1A1A;
+  transition: width 0.6s ease 0s;
 }
 
 .accordion-container {
@@ -759,22 +768,6 @@ hr {
   border-radius: 10px;
 }
 
-.check {
-  cursor: pointer;
-  height: 24px;
-  width: 24px;
-  border-radius: 100%;
-  border: 2px dashed #8A8A8A;
-}
-
-.check:hover {
-  border: 2px solid #8A8A8A;
-}
-
-.check:active {
-  background-color: #D9D9D9;
-}
-
 .accordion-details .check-container {
   margin-right: 8px;
   display: flex;
@@ -788,13 +781,68 @@ hr {
   color: var(--bg);
 }
 
-.accordion-details .check-container .check:hover {
-  border: 2px solid #8A8A8A;
+.accordion-details .check-container .check {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
 }
 
-.accordion-details .check-container .check:active {
-  background-color: #D9D9D9;
+.accordion-details .check-container .check:active svg{
+  fill: #D9D9D9;
 }
+
+.accordion-details .check-container .check .check-border-full {
+  height: 24px;
+  width: 24px;
+}
+
+.accordion-details .check-container .check .check-rotate {
+  height: 20px;
+  width: 20px;
+  margin-bottom: 2px;
+  margin-top: 2px;
+  display: none;
+}
+
+.check-rotate-active {
+  display: block !important;
+  animation: rotate-center 0.6s ease-in-out both;
+}
+
+@keyframes rotate-center {
+  0% {
+        transform: rotate(0);
+  }
+  100% {
+          transform: rotate(360deg);
+  }
+}
+
+.accordion-details .check-container .check .check-tick {
+  height: 24px;
+  width: 24px;
+  display: none;
+}
+
+
+.check-tick-active {
+  display: block !important;
+  animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@keyframes scale-in-center {
+  0% {
+      transform: scale(0);
+      opacity: 1;
+  }
+  100% {
+        transform: scale(1);
+        opacity: 1;
+  }
+}
+
 
 .accordion-details .details {
   display: flex;
@@ -806,6 +854,11 @@ hr {
 
 .accordion-details .details .check {
   visibility: hidden;
+}
+
+.accordion-details .details .check svg {
+  height: 24px;
+  width: 24px;
 }
 
 .accordion-details .details .details-body p {

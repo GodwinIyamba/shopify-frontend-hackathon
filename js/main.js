@@ -72,6 +72,11 @@ function showNotificationDropdown() {
 }
 
 function showProfileDropdown(){
+
+    const expanded = profileBtn.getAttribute('aria-expanded') === 'true';
+  
+    profileBtn.setAttribute('aria-expanded', !expanded);
+
     if(profileDropdown.classList.contains('show')) {    
         profileDropdown.classList.remove('show');
     } else {
@@ -178,8 +183,6 @@ function showCheckRotateTick(checkBorderFull) {
 
     let accordion = checkRotate.parentElement.parentElement.parentElement.parentElement;
 
-    accordion.setAttribute('aria-current', 'true');
-
     checkRotate.classList.add('check-rotate-active');
 
     setTimeout(() => {
@@ -214,15 +217,55 @@ function showCheckRotateTick(checkBorderFull) {
 
         accordion.classList.add('collapsed');
 
-        if(!accordion.nextElementSibling.hasAttribute('aria-checked')) {
-            accordion.removeAttribute('aria-current');
-            accordion.nextElementSibling.classList.remove('collapsed');
-            accordion.nextElementSibling.setAttribute('aria-current', 'true');
+        function criteria(element){
+            if(element !== null ) {
+                if(!element.hasAttribute('aria-checked')) {
+                    return true;
+                }
+            } 
+        }
+
+        function checkNextSiblings(element, criteriaFn) {
+
+            if(!element || !element.nextElementSibling) {
+              return; 
+            }
+          
+            if(criteriaFn(element.nextElementSibling)) {
+              return element.nextElementSibling;
+            } 
+            
+            return checkNextSiblings(element.nextElementSibling, criteriaFn);
+          
+        }
+
+        function checkPreviousSiblings(element, criteriaFn) {
+
+            if(!element || !element.previousElementSibling) {
+              return; 
+            }
+        
+            if(criteriaFn(element.previousElementSibling)) {
+              return element.previousElementSibling;
+            } 
+            
+            return checkPreviousSiblings(element.previousElementSibling, criteriaFn);
+          
+        }
+
+        let nextSibling = checkNextSiblings(accordion, criteria)
+
+        if(nextSibling){
+            nextSibling.classList.remove('collapsed');
+        } else {
+            let previousSibling = checkPreviousSiblings(accordion, criteria)
+
+            previousSibling.classList.remove('collapsed')
+            console.log(previousSibling);
         }
 
       }, 600);
-
-}
+} 
 
 function removeCheckTick(checkTick) {
     checkTick.classList.remove('check-tick-active');
@@ -233,7 +276,7 @@ function removeCheckTick(checkTick) {
 
     checkRotate.previousElementSibling.classList.remove('hide')
 
-    accordion.removeAttribute('aria-checked', 'true');
+    accordion.removeAttribute('aria-checked');
 
     let section = 100 / checkTicks.length;
     let activeAccordionCount = 0;

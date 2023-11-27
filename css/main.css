@@ -67,7 +67,7 @@ body {
   width: 100vw;
 }
 
-/* Placeholder Style */
+/* Default Style */
 
 ::placeholder {
   color: var(--search-text)
@@ -86,6 +86,16 @@ hr {
   margin: 0px;
   border: 0px;
   background-color: #E1E1E1;
+}
+
+button {
+  background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
 }
 
 /* Font Import via Google Fonts */
@@ -398,14 +408,14 @@ hr {
   background-color: var(--bg);
 }
 
-.notification-icon > span {
+.notification-icon > button {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 8.5px;
 }
 
-.notification-icon > span svg {
+.notification-icon > button svg {
   height: 20px;
   width: 20px;
   color: var(--font-light);
@@ -420,7 +430,7 @@ hr {
   background-color: var(--font-mid-light);
 }
 
-.notification > .profile-detail {
+.notification > .profile-detail button {
   cursor: pointer;
   padding: 2px;
   display: flex;
@@ -432,19 +442,19 @@ hr {
   position: relative;
 }
 
-.notification > .profile-detail:hover {
+.notification > .profile-detail button:hover {
   background-color: var(--font-mid);
 }
 
-.notification > .profile-detail:active {
+.notification > .profile-detail button:active {
   background-color: var(--font-mid-light);
 }
 
-.notification > .profile-detail .profile-name {
+.notification > .profile-detail button .profile-name {
   padding: 8.5px 0px 8.5px 6px;
 }
 
-.notification > .profile-detail .profile-initials {
+.notification > .profile-detail button .profile-initials {
   display: inline-block;
   line-height: normal;
   text-align: center;

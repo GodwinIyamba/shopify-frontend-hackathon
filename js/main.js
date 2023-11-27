@@ -5,6 +5,7 @@ const closeAlertBtn = document.querySelector('.alert-icon');
 const closeMobileAlertBtn = document.querySelector('.alert-icon-mobile');
 const upArrowBtn = document.querySelector('.up-arrow');
 const downArrowBtn = document.querySelector('.down-arrow');
+const accordions = document.querySelectorAll('.accordion');
 const accordionHeaders = document.getElementsByClassName('check-header');
 const checkBorderFulls = document.getElementsByClassName('check-border-full');
 const checkRotates = document.getElementsByClassName('check-rotate');
@@ -175,11 +176,24 @@ function showCheckRotateTick(checkBorderFull) {
 
     let checkRotate = checkBorderFull.nextElementSibling;
 
+    let accordion = checkRotate.parentElement.parentElement.parentElement.parentElement;
+
+    accordion.setAttribute('aria-current', 'true');
+
     checkRotate.classList.add('check-rotate-active');
 
     setTimeout(() => {
         checkRotate.classList.remove('check-rotate-active');
         checkRotate.nextElementSibling.classList.add('check-tick-active');
+        accordion.setAttribute('aria-checked', 'true');
+
+        for(let checkTick of checkTicks) {
+            let currentAccordion = checkTick.parentElement.parentElement.parentElement.parentElement;
+
+            if(!currentAccordion.classList.contains('collapsed')) {
+                currentAccordion.classList.add('collapsed');
+            }
+        }
       }, 600);
 
     let section = 100 / checkTicks.length;
@@ -197,7 +211,17 @@ function showCheckRotateTick(checkBorderFull) {
         progressDetails.innerText = activeAccordionCount + ' / ' + checkTicks.length + ' completed';
         progressBar.removeAttribute('style');
         progressBar.setAttribute('style','width:' + progressBarWidth + '%;');
+
+        accordion.classList.add('collapsed');
+
+        if(!accordion.nextElementSibling.hasAttribute('aria-checked')) {
+            accordion.removeAttribute('aria-current');
+            accordion.nextElementSibling.classList.remove('collapsed');
+            accordion.nextElementSibling.setAttribute('aria-current', 'true');
+        }
+
       }, 600);
+
 }
 
 function removeCheckTick(checkTick) {
@@ -205,7 +229,11 @@ function removeCheckTick(checkTick) {
 
     let checkRotate = checkTick.previousElementSibling;
 
+    let accordion = checkRotate.parentElement.parentElement.parentElement.parentElement;
+
     checkRotate.previousElementSibling.classList.remove('hide')
+
+    accordion.removeAttribute('aria-checked', 'true');
 
     let section = 100 / checkTicks.length;
     let activeAccordionCount = 0;

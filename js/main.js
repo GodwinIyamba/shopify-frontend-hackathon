@@ -1,4 +1,4 @@
-// TOGGLE Btns
+// TOGGLE BUTTONS
 const notificationBtn = document.querySelector('.notification-icon');
 const profileBtn = document.querySelector('.profile-detail');
 const closeAlertBtn = document.querySelector('.alert-icon');
@@ -26,6 +26,7 @@ closeAlertBtn.addEventListener('click', closeAlert);
 closeMobileAlertBtn.addEventListener('click', closeMobileAlert);
 upArrowBtn.addEventListener('click', closeAccordionContainer);
 downArrowBtn.addEventListener('click', openAccordionContainer);
+profileDropdown.addEventListener('keydown', handleDropdownNavigation);
 
 for(let accordionHeader of accordionHeaders) {
     accordionHeader.addEventListener('click', () => {
@@ -68,6 +69,10 @@ function showNotificationDropdown() {
         notificationDropdown.classList.remove('show');
     } else {
         notificationDropdown.classList.add('show');
+
+        let firstFocusableElement = notificationDropdown.querySelector('span');
+
+        firstFocusableElement.focus();
     }
 }
 
@@ -81,6 +86,10 @@ function showProfileDropdown(){
         profileDropdown.classList.remove('show');
     } else {
         profileDropdown.classList.add('show');
+
+        let firstFocusableElement = profileDropdown.querySelector('a');
+    
+        firstFocusableElement.focus();
     }  
 }
 
@@ -261,7 +270,6 @@ function showCheckRotateTick(checkBorderFull) {
             let previousSibling = checkPreviousSiblings(accordion, criteria)
 
             previousSibling.classList.remove('collapsed')
-            console.log(previousSibling);
         }
 
       }, 600);
@@ -293,4 +301,21 @@ function removeCheckTick(checkTick) {
 
     progressBar.removeAttribute('style');
     progressBar.setAttribute('style','width:' + progressBarWidth + '%;');
+}
+
+function handleDropdownNavigation(event) {
+    if (event.key === 'Escape') {
+        // Close the dropdown on 'Escape' key
+        profileDropdown.classList.remove('show');
+        dropdownButton.setAttribute('aria-expanded', 'false');
+        dropdownButton.focus(); // Return focus to the dropdown button
+    } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+        // Handle arrow key navigation within the dropdown
+        event.preventDefault();
+        var focusableItems = profileDropdown.querySelectorAll('a');
+        var currentIndex = Array.from(focusableItems).indexOf(document.activeElement);
+        var nextIndex = event.key === 'ArrowDown' ? (currentIndex + 1) % focusableItems.length : (currentIndex - 1 + focusableItems.length) % focusableItems.length;
+
+        focusableItems[nextIndex].focus();
+    }
 }

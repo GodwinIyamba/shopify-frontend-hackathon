@@ -203,6 +203,7 @@ button {
 
 .invisible {
   display: none !important;
+  visibility: hidden;
 }
 
 .main-body {
@@ -745,6 +746,11 @@ button {
   border: 1px solid #DBDBDB;
   border-radius: 18px;
   padding: 8px;
+}
+
+.slide-up {
+  transform: translateY(-50px);
+  /* transition: 0.2s linear; */
 }
 
 .header {
